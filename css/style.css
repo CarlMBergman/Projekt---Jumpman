@@ -1,0 +1,22 @@
+.grid {
+    width: 400px;
+    height: 600px;
+    background: salmon;
+    position: relative;
+    font-size: 80px;
+    text-align: center;
+}
+
+.player {
+    width: 60px;
+    height: 85px;
+    background: blue;
+    position: absolute;
+}
+
+.platform {
+    width: 85px;
+    height: 15px;
+    background-color: black;
+    position: absolute;
+}
