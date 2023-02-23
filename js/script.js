@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     const player = document.createElement('div');
     let playerLeftSpace = 50;
-    let startPoint = 150;
+    let startPoint = 180;
     let playerBottomSpace = startPoint;
     let isGameOver = false;
     let platformCount = 5;
@@ -107,15 +107,43 @@ document.addEventListener('DOMContentLoaded', () => {
         },30)
     }
 
+
+
+    function moveRight() {
+        if (isMovingLeft === true) {
+            clearInterval(leftTimerId)
+            isMovingLeft = false
+        }
+        else if (isMovingRight === true) {
+            console.log('du går readn höger!');
+        }
+        else {
+            isMovingRight = true
+            leftTimerId = setInterval(function() {
+                   // stopRight++
+                if (playerLeftSpace <= 340) {
+                   // stopMoveLeft()
+                   playerLeftSpace += 5
+                   player.style.left = playerLeftSpace + 'px'
+                    
+                   console.log('går höger!');
+                } else {
+                   console.log('kantstöt!');
+                   moveLeft()
+                }
+            },30)   
+        }  
+    }
+
     function moveLeft() {
         if (isMovingRight === true) {
             clearInterval(rightTimerId)
             isMovingRight = false
         }
-        // if (isMovingLeft === true) {
-        //     console.log('du går redan vänster!');
-        // }
-        // else {
+         else if (isMovingLeft === true) {
+            console.log('du går redan vänster!');
+        }
+        else {
             isMovingLeft = true
             leftTimerId = setInterval(function () {
                 // stopLeft++
@@ -130,36 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     moveRight()
                 }
             },30)
-        // }
-        
-    }
-
-    function moveRight() {
-        if (isMovingLeft === true) {
-            clearInterval(leftTimerId)
-            isMovingLeft = false
         }
-        // if (isMovingRight === true) {
-        //     console.log('du går readn höger!');
-        // }
-        // else {
-            isMovingRight = true
-            leftTimerId = setInterval(function() {
-               // stopRight++
-           if (playerLeftSpace <= 340) {
-               // stopMoveLeft()
-               playerLeftSpace += 5
-               player.style.left = playerLeftSpace + 'px'
-               
-               console.log('går höger!');
-           } else {
-               console.log('kantstöt!');
-               moveLeft()
-           }
-       },30)   
-        // }
-        
-        
     }
 
     // function stopMoveLeft() {  
@@ -191,18 +190,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function control(e) {
         player.style.bottom = playerBottomSpace + 'px'
-        if (e.key === 'ArrowRight') {
-            // stopMoveLeft()
-            moveRight()
-        } 
-        if (e.key === 'ArrowUp') {
-            moveStraight()
-        }
         if (e.key === 'ArrowLeft') {
             // stopMoveRight()
             moveLeft()
-            
         }
+        else if (e.key === 'ArrowUp') {
+            moveStraight()
+        }
+        else if (e.key === 'ArrowRight') {
+            // stopMoveLeft()
+            moveRight()
+        } 
     }
 
     function gameOver() {
