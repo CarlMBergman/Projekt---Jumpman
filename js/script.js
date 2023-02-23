@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let leftTimerId;
     let rightTimerId;
     let score = 0;
-    let stopLeft = 0;
-    let stopRight = 0;
     
 
     function createPlayer() {
@@ -113,22 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
             isMovingLeft = false
         }
         if (isMovingRight === true) {
-            console.log('du går redan höger!');
-            return;
+            console.log('Already going right!');
         }
-        isMovingRight = true
-        if (isMovingRight) {
-           console.log('höger');
+        else {
             rightTimerId = setInterval(function() {
-                   // stopRight++
                 if (playerLeftSpace <= 340) {
-                   // stopMoveLeft()
                    playerLeftSpace += 5
                    player.style.left = playerLeftSpace + 'px'
-                    
-                   console.log('går höger!');
+                   console.log('Right!');
+                   isMovingRight = true
                 } else {
-                   console.log('kantstöt!');
+                   console.log('Wallhit!');
                    moveLeft()
                 }
             },30)   
@@ -141,46 +134,22 @@ document.addEventListener('DOMContentLoaded', () => {
             isMovingRight = false
         }
         if (isMovingLeft === true) {
-            console.log('du går redan vänster!');
-       
+            console.log('Already going left!');
         }
-        isMovingLeft = true
-        if (isMovingLeft) {
+        else {
             leftTimerId = setInterval(function () {
-                // stopLeft++
                 if (playerLeftSpace >= 0) {
-                    // stopMoveRight()
                     playerLeftSpace -= 5
                     player.style.left = playerLeftSpace + 'px'
-                    
-                    console.log('går vänster!');
+                    console.log('Left!');
+                    isMovingLeft = true
                 } else {
-                    console.log('kantstöt!');
+                    console.log('wallhit!');
                     moveRight()
                 }
             },30)
         }
     }
-
-    // function stopMoveLeft() {  
-    //     for (let i = 0; i < stopLeft; i++) {
-    //         clearInterval(leftTimerId)
-    //         isMovingLeft = false
-    //         console.log('stop left!');
-            
-    //     }
-    //     stopLeft = 0;
-    // }
-
-    // function stopMoveRight() {  
-    //     for (let i = 0; i < stopRight; i++) {
-    //         clearInterval(rightTimerId)
-    //         isMovingRight = false
-    //         console.log('stop right!'); 
-            
-    //     }    
-    //     stopRight = 0;
-    // }
 
     function moveStraight() {
         isMovingRight = false
@@ -192,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function control(e) {
         player.style.bottom = playerBottomSpace + 'px'
         if (e.key === 'ArrowLeft') {
-            // stopMoveRight()
             moveLeft()
             console.log('vänsterklick');
         }
@@ -200,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
             moveStraight()
         }
         else if (e.key === 'ArrowRight') {
-            // stopMoveLeft()
             moveRight()
             console.log('högerklick');
         } 
