@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         player.style.bottom = playerBottomSpace + 'px'
     }
 
-    class Platform {
+    class Platform1 {
         constructor(newPlatBottom) {
             this.bottom = newPlatBottom;
             this.left = Math.random() * 315
@@ -33,6 +33,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const visual = this.visual
             visual.classList.add('platform')
+            visual.classList.add('platform1')
+            visual.style.left = this.left + 'px'
+            visual.style.bottom = this.bottom + 'px'
+            grid.appendChild(visual)
+        }
+    }
+
+    class Platform2 {
+        constructor(newPlatBottom) {
+            this.bottom = newPlatBottom;
+            this.left = Math.random() * 315
+            this.visual = document.createElement('div')
+
+            const visual = this.visual
+            visual.classList.add('platform')
+            visual.classList.add('platform2')
             visual.style.left = this.left + 'px'
             visual.style.bottom = this.bottom + 'px'
             grid.appendChild(visual)
@@ -43,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < platformCount; i++) {
             let platGap = 600 / platformCount
             let newPlatBottom = 100 + i * platGap
-            let newPlatform = new Platform(newPlatBottom)
+            let newPlatform = new Platform1(newPlatBottom)
             platforms.push(newPlatform)
             console.log(platforms);
         }
@@ -55,15 +71,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.bottom -= 4
                 let visual = platform.visual
                 visual.style.bottom = platform.bottom + 'px'
-
-                if (platform.bottom < 10) {
-                    let firstPlatform = platforms[0].visual
-                    firstPlatform.classList.remove('platform')
-                    platforms.shift()
-                    score++
-                    let newPlatform = new Platform(600)
-                    platforms.push(newPlatform)
+                if (score < 10) {
+                        if (platform.bottom < 10) {
+                        let firstPlatform = platforms[0].visual
+                        firstPlatform.classList.remove('platform')
+                        platforms.shift()
+                        score++
+                        let newPlatform = new Platform1(600)
+                        platforms.push(newPlatform)
+                    }
                 }
+                else if (score >= 10) {
+                    if (platform.bottom < 10) {
+                        let firstPlatform = platforms[0].visual
+                        firstPlatform.classList.remove('platform')
+                        platforms.shift()
+                        score++
+                        let newPlatform = new Platform2(600)
+                        platforms.push(newPlatform)
+                    }
+                }
+                
             })
         }
     }
@@ -162,14 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
         player.style.bottom = playerBottomSpace + 'px'
         if (e.key === 'ArrowLeft') {
             moveLeft()
-            console.log('vänsterklick');
+            console.log('leftclick');
         }
         else if (e.key === 'ArrowUp') {
             moveStraight()
         }
         else if (e.key === 'ArrowRight') {
             moveRight()
-            console.log('högerklick');
+            console.log('rightclick');
         } 
     }
 

@@ -1,3 +1,10 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .grid {
     width: 400px;
     height: 600px;
@@ -5,6 +12,7 @@
     position: relative;
     font-size: 80px;
     text-align: center;
+    overflow: hidden;
 }
 
 .player {
@@ -15,8 +23,15 @@
 }
 
 .platform {
-    width: 85px;
     height: 15px;
     background-color: black;
     position: absolute;
+}
+
+.platform1 {
+    width: 85px;
+}
+
+.platform2 {
+    width: 20px;
 }
