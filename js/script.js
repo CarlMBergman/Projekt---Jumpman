@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
     const player = document.createElement('div');
     let playerLeftSpace = 50;
-    let startPoint = 180;
+    let startPoint = 20;
     let playerBottomSpace = startPoint;
     let isGameOver = false;
     let platformCount = 5;
@@ -107,19 +107,19 @@ document.addEventListener('DOMContentLoaded', () => {
         },30)
     }
 
-
-
     function moveRight() {
         if (isMovingLeft === true) {
             clearInterval(leftTimerId)
             isMovingLeft = false
         }
-        else if (isMovingRight === true) {
-            console.log('du går readn höger!');
+        if (isMovingRight === true) {
+            console.log('du går redan höger!');
+            return;
         }
-        else {
-            isMovingRight = true
-            leftTimerId = setInterval(function() {
+        isMovingRight = true
+        if (isMovingRight) {
+           console.log('höger');
+            rightTimerId = setInterval(function() {
                    // stopRight++
                 if (playerLeftSpace <= 340) {
                    // stopMoveLeft()
@@ -140,11 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(rightTimerId)
             isMovingRight = false
         }
-         else if (isMovingLeft === true) {
+        if (isMovingLeft === true) {
             console.log('du går redan vänster!');
+       
         }
-        else {
-            isMovingLeft = true
+        isMovingLeft = true
+        if (isMovingLeft) {
             leftTimerId = setInterval(function () {
                 // stopLeft++
                 if (playerLeftSpace >= 0) {
@@ -193,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'ArrowLeft') {
             // stopMoveRight()
             moveLeft()
+            console.log('vänsterklick');
         }
         else if (e.key === 'ArrowUp') {
             moveStraight()
@@ -200,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (e.key === 'ArrowRight') {
             // stopMoveLeft()
             moveRight()
+            console.log('högerklick');
         } 
     }
 
