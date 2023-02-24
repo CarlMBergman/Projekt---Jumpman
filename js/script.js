@@ -1,22 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid');
+    const grid   = document.querySelector('.grid');
     const player = document.createElement('div');
     let playerLeftSpace = 50;
+    let score = 0;
     let startPoint = 20;
     let playerBottomSpace = startPoint;
-    let isGameOver = false;
     let platformCount = 5;
     let platforms = [];
     let upTimerId;
     let downTimerId;
-    let isJumping = true;
-    let isMovingLeft = false;
-    let isMovingRight = false;
     let leftTimerId;
     let rightTimerId;
-    let score = 0;
+    let isJumping     = true;
+    let isMovingLeft  = false;
+    let isMovingRight = false;
+    let isGameOver    = false;
     
-
     function createPlayer() {
         grid.appendChild(player)
         player.classList.add('player')
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     class Platform2 {
         constructor(newPlatBottom) {
             this.bottom = newPlatBottom;
-            this.left = Math.random() * 315
+            this.left = Math.random() * 380
             this.visual = document.createElement('div')
 
             const visual = this.visual
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.bottom -= 4
                 let visual = platform.visual
                 visual.style.bottom = platform.bottom + 'px'
-                if (score < 10) {
+                if (score < 4) {
                         if (platform.bottom < 10) {
                         let firstPlatform = platforms[0].visual
                         firstPlatform.classList.remove('platform')
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         platforms.push(newPlatform)
                     }
                 }
-                else if (score >= 10) {
+                else if (score >= 4) {
                     if (platform.bottom < 10) {
                         let firstPlatform = platforms[0].visual
                         firstPlatform.classList.remove('platform')
