@@ -118,10 +118,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             platforms.forEach(platform => {
                 if (
+                    (platform.visual.className === "platform platform1") &&
                     (playerBottomSpace >= platform.bottom) &&
                     (playerBottomSpace <= platform.bottom + 15) &&
                     ((playerLeftSpace + 60) >= platform.left) &&
                     (playerLeftSpace <= (platform.left + 85)) &&
+                    !isJumping
+                ) {
+                    console.log('landed');
+                    startPoint = playerBottomSpace
+                    jump()
+                }
+                else if (
+                    (platform.visual.className === "platform platform2") &&
+                    (playerBottomSpace >= platform.bottom) &&
+                    (playerBottomSpace <= platform.bottom + 15) &&
+                    ((playerLeftSpace + 60) >= platform.left) &&
+                    (playerLeftSpace <= (platform.left + 20)) &&
                     !isJumping
                 ) {
                     console.log('landed');
