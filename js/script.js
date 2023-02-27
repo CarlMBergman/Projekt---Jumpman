@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid   = document.querySelector('.grid');
-    const player = document.createElement('div');
+    let player = document.createElement('div');
     let playerLeftSpace = 50;
     let score = 0;
     let startPoint = 20;
     let playerBottomSpace = startPoint;
     let platformCount = 5;
     let platforms = [];
+    let movePlatId;
     let upTimerId;
     let downTimerId;
     let leftTimerId;
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playerLeftSpace = platforms[0].left
         player.style.left = playerLeftSpace + 'px'
         player.style.bottom = playerBottomSpace + 'px'
+        console.log('player created');
     }
 
     class Platform1 {
@@ -54,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    function  createPlatforms() {
-        for (let i = 0; i < platformCount; i++) {
+    function  createPlatforms(startPlats) {
+        for (let i = startPlats; i < platformCount; i++) {
             let platGap = 600 / platformCount
             let newPlatBottom = 100 + i * platGap
             let newPlatform = new Platform1(newPlatBottom)
@@ -78,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         score++
                         let newPlatform = new Platform1(600)
                         platforms.push(newPlatform)
+                        console.log('flyttar plattform!');
                     }
                 }
                 else if (score >= 4) {
@@ -88,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         score++
                         let newPlatform = new Platform2(600)
                         platforms.push(newPlatform)
+                        console.log('flyttar plattform!');
                     }
                 }
                 
@@ -101,8 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
         upTimerId = setInterval(function() {
             playerBottomSpace += 20
             player.style.bottom = playerBottomSpace + 'px'
+            console.log('hoppar!');
             if (playerBottomSpace > startPoint + 200) {
                 fall()
+                console.log('faller');
             }
         },30)
     }
@@ -219,22 +225,53 @@ document.addEventListener('DOMContentLoaded', () => {
         while (grid.firstChild) {
             grid.removeChild(grid.firstChild)
         }
-        grid.innerHTML = 'game over' + '<br>' + score
+        grid.innerHTML = `<div id="lostPage">
+                            <h1 class="heading">Game Over!</h1>
+                            <h4>You scored: ${score}</h4>
+                            <button id="playAgain">Play Again?</button>
+                          </div>  
+                            `
         clearInterval(upTimerId)
         clearInterval(downTimerId)
         clearInterval(leftTimerId)
         clearInterval(rightTimerId)
+        clearInterval(movePlatId)
+        playerLeftSpace = 50;
+        score = 0;
+        startPoint = 20;
+        playerBottomSpace = startPoint;
+        platformCount = 5;
+        platforms = [];
+        isJumping     = true;
+        isMovingLeft  = false;
+        isMovingRight = false;
+        isGameOver    = false;
+        console.log(platforms);
+        document.querySelector('#playAgain').addEventListener('click', playAgain)
     }
+
+   
 
     function start() {
         if (!isGameOver) {
-            createPlatforms()
+            let startPlats = 0
+            createPlatforms(startPlats)
             createPlayer()
-            setInterval(movePlatforms,30)
+            movePlatId = setInterval(movePlatforms,30)
             jump()
             document.addEventListener('keyup', control)
         }
     }
+    function playAgain() {
+        player = document.createElement('div');
+        isGameOver = false
+        document.querySelector('#lostPage').remove()
+        start()
+        console.log('play again');
+    }
 
-    start()
+    document.querySelector('#startGame').addEventListener('click', () => {
+        start()
+        document.querySelector('#startPage').remove()
+    })
 })

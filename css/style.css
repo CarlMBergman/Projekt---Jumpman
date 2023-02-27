@@ -17,7 +17,7 @@ body {
 
 .player {
     width: 60px;
-    height: 85px;
+    height: 60px;
     background: blue;
     position: absolute;
 }
@@ -34,4 +34,12 @@ body {
 
 .platform2 {
     width: 20px;
+}
+
+.heading {
+    font-size: 30px;
+}
+
+.instruction {
+    font-size: 16px;
 }
