@@ -1,4 +1,9 @@
+import { getScores } from "./modules/firebaseconfig.js";
+
 document.addEventListener('DOMContentLoaded', () => {
+    
+    getScores()
+
     const grid   = document.querySelector('.grid');
     let player = document.createElement('div');
     let playerLeftSpace = 50;
@@ -245,7 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isJumping     = true;
         isMovingLeft  = false;
         isMovingRight = false;
-        isGameOver    = false;
         console.log(platforms);
         document.querySelector('#playAgain').addEventListener('click', playAgain)
     }
