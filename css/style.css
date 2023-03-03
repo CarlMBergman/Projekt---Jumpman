@@ -50,3 +50,29 @@ body {
     border-radius: 1rem;
     border: none;
 }
+
+.highscores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.highscore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.highscore__name {
+    font-size: 1rem;
+    padding: 5px;
+    margin: 0;
+}
+
+.highscore__score {
+    font-size: 1rem;
+    padding: 5px;
+    margin: 0;
+}

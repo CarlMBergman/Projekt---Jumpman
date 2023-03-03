@@ -25,19 +25,37 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where
       highScores.push(score)
       console.log(highScores);
     })
+    
+    sortScores()
+    displayScores()
+
+  }
+
+  function sortScores() {
+    highScores.sort((a,b) => {
+      return b.score - a.score;
+    })
+    console.log(highScores);
   }
 
   async function displayScores() {
-  getScores()
 
-    highScores.forEach((score) => {
-      const elem = `
-      <div class="highscore">
-        <h4 class="highscore__name">${score.data().name}<span class="highscore__score">${score.data().score}</span></h4>
-      </div>
-      `
-    })
+
+    for (let i = 0; i < highScores.length; i++) {
+      if (i < 5) {
+        const elem = `
+          <div class="highscore">
+            <p class="highscore__name">Name:${highScores[i].name}</p>
+            <p class="highscore__score">Score:${highScores[i].score}</p>
+          </div>
+          `
+      document.querySelector('#highscoreList').insertAdjacentHTML('beforeend', elem);
+      console.log(i);
+      }
+      
+    } 
   }
+  
 
-  export{ getScores }
+  export{ getScores, displayScores }
   
