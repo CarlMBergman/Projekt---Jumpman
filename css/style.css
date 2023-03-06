@@ -4,6 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     user-select: none;
+    font-family: 'PT sans';
 }
 
 .grid {
@@ -14,27 +15,29 @@ body {
     font-size: 80px;
     text-align: center;
     overflow: hidden;
+    background-image: url('/img/playingfield.png');
 }
 
 .player {
     width: 60px;
-    height: 60px;
-    background: blue;
+    height: 84px;
     position: absolute;
+    background-image: url('/img/jumpman.svg');
 }
 
 .platform {
     height: 15px;
-    background-color: black;
     position: absolute;
 }
 
 .platform1 {
     width: 85px;
+    background-image: url('/img/Platform.svg');
 }
 
 .platform2 {
     width: 20px;
+    background-image: url('/img/Platformsmall.svg');
 }
 
 .heading {
@@ -59,6 +62,14 @@ body {
     align-items: center;
 }
 
+.lost-page__heading {
+    font-size: 46px;
+}
+
+.lost-page__text {
+    font-size: 30px;
+}
+
 .startPage__input {
     margin-bottom: 1rem;
     border: none;
@@ -77,6 +88,9 @@ body {
 .startPage__button {
     padding: 1rem;
     border: none;
+    background-color: olive;
+    font-family: 'PT sans';
+    font-size: 16px;
 }
 
 .startPage__button:hover {
@@ -91,6 +105,11 @@ body {
     border-radius: 0 0 2rem 2rem;
 }
 
+.startPage__man {
+    margin-top: 1rem;
+    width: 150px;
+}
+
 .highscores {
     display: none;
     justify-content: flex-start;
@@ -99,7 +118,7 @@ body {
     background-color: antiquewhite;
     position: absolute;
     width: 300px;
-    height: 450px;
+    height: 470px;
     top: 30px;
 }
 
@@ -132,4 +151,6 @@ body {
     border: none;
     border-radius: 1rem;
     background-color: rgb(174, 136, 136);
+    font-family: 'PT sans';
+    font-size: 16px;
 }

@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.bottom = newPlatBottom;
             this.left = Math.random() * 315
             this.visual = document.createElement('div')
+            
 
             const visual = this.visual
             visual.classList.add('platform')
@@ -84,10 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 platform.bottom -= 4
                 let visual = platform.visual
                 visual.style.bottom = platform.bottom + 'px'
-                if (score < 4) {
+                if (score < 15) {
                         if (platform.bottom < 10) {
                         let firstPlatform = platforms[0].visual
                         firstPlatform.classList.remove('platform')
+                        firstPlatform.classList.remove('platform1')
+                        console.log(firstPlatform);
                         platforms.shift()
                         score++
                         let newPlatform = new Platform1(600)
@@ -95,10 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log('flyttar plattform!');
                     }
                 }
-                else if (score >= 4) {
+                else if (score >= 15) {
                     if (platform.bottom < 10) {
                         let firstPlatform = platforms[0].visual
                         firstPlatform.classList.remove('platform')
+                        firstPlatform.classList.remove('platform2')
                         platforms.shift()
                         score++
                         let newPlatform = new Platform2(600)
@@ -274,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         grid.innerHTML = 
         `<div id="lostPage" class="lost-page">
-            <h1 class="heading">Game Over!</h1>
-            <h4>You scored: ${score}</h4>
+            <h1 class="lost-page__heading">Game Over!</h1>
+            <h4 class="lost-page__text">You scored: ${score}</h4>
             <div class="startPage__buttons">
             <button id="playAgain" class="startPage__button">Play Again?</button>
             <button id="backToStart" class="startPage__button">Back to startpage</button>
@@ -296,6 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
                 <button class="startPage__button">How to play?</button>
             </div>
+            <img src="../img/jumpman.svg"/ class="startPage__man">
             <div class="highscores" id="highscoreList">
                 <h2 class="highscores__heading">HighScores!</h2>
                 <button class="highscores__btn" id="highscoreBtn">
