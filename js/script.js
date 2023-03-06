@@ -322,11 +322,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         document.querySelector('#startGame').addEventListener('click', () => {
-            start()
+            
             let userInput = document.querySelector('#inputUser')
             playerHighscore.name = userInput.value
-            document.querySelector('#startPage').remove()
-            console.log(playerHighscore);
+            if (playerHighscore.name === '') {
+                alert('Submit a username!')
+            } else {
+                start()
+                document.querySelector('#startPage').remove()
+                console.log(playerHighscore);
+            }
+            
         })
 
         document.querySelector('#highscoreBtn').addEventListener('click', () => {
