@@ -13,8 +13,10 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   let highScores = [];
+  let userInput = document.querySelector('#inputUser')
 
   async function getScores() {
+    highScores = [];
     const highScoresList = await getDocs(collection(db, 'Highscores'));
     console.log(highScoresList);
     highScoresList.forEach((highScore) => {
@@ -45,11 +47,11 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where
       if (i < 5) {
         const elem = `
           <div class="highscore">
-            <p class="highscore__name">Name:${highScores[i].name}</p>
-            <p class="highscore__score">Score:${highScores[i].score}</p>
+            <p class="highscore__name">${i+1}.Name: ${highScores[i].name}</p>
+            <p class="highscore__score">Score: ${highScores[i].score}</p>
           </div>
           `
-      document.querySelector('#highscoreList').insertAdjacentHTML('beforeend', elem);
+      document.querySelector('#highscoreBtn').insertAdjacentHTML('beforebegin', elem);
       console.log(i);
       }
       

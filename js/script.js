@@ -1,8 +1,6 @@
 import { getScores } from "./modules/firebaseconfig.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    getScores()
 
     const grid   = document.querySelector('.grid');
     let player = document.createElement('div');
@@ -21,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isMovingLeft  = false;
     let isMovingRight = false;
     let isGameOver    = false;
+
+    displayStartPage()
     
     function createPlayer() {
         grid.appendChild(player)
@@ -104,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+    // makes the player fall when 
     function jump() {
         clearInterval(downTimerId)
         isJumping = true
@@ -118,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },30)
     }
 
+    // makes the player able to jump when he touches a platform
     function fall() {
         clearInterval(upTimerId)
         isJumping = false
@@ -156,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },30)
     }
 
+
+    // the functions that makes the player move
     function moveRight() {
         if (isMovingLeft === true) {
             clearInterval(leftTimerId)
@@ -209,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(leftTimerId)
     }
 
+    // links arrowkeys to moving functions
     function control(e) {
         player.style.bottom = playerBottomSpace + 'px'
         if (e.key === 'ArrowLeft') {
@@ -227,15 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function gameOver() {
         console.log('game over');
         isGameOver = true
-        while (grid.firstChild) {
-            grid.removeChild(grid.firstChild)
-        }
-        grid.innerHTML = `<div id="lostPage">
-                            <h1 class="heading">Game Over!</h1>
-                            <h4>You scored: ${score}</h4>
-                            <button id="playAgain">Play Again?</button>
-                          </div>  
-                            `
+        displayLostPage()
+        // resets all actions
         clearInterval(upTimerId)
         clearInterval(downTimerId)
         clearInterval(leftTimerId)
@@ -252,10 +251,73 @@ document.addEventListener('DOMContentLoaded', () => {
         isMovingRight = false;
         console.log(platforms);
         document.querySelector('#playAgain').addEventListener('click', playAgain)
+        document.querySelector('#backToStart').addEventListener('click', () => {
+            document.querySelector('#lostPage').remove()
+            displayStartPage()
+        })
     }
 
-   
+    function displayLostPage() {
+        while (grid.firstChild) {
+            grid.removeChild(grid.firstChild)
+        }
+        grid.innerHTML = 
+        `<div id="lostPage">
+            <h1 class="heading">Game Over!</h1>
+            <h4>You scored: ${score}</h4>
+            <button id="playAgain">Play Again?</button>
+            <button id="backToStart">Back to startpage</button>
+        </div>`
+    }
 
+    function displayStartPage() {
+        let elem = `
+        <div id="startPage" class="startPage">
+            <h1 class="heading">Welcome to Jumpman!</h1>
+            <p class="instruction">Insert your username and then press the button to play!</p>
+            <input id="inputUser" type="text" value="username">
+            <div class="startPage__buttons">
+                <button id="startGame" class="startPage__button">Start game!</button>
+                <button id="veiwHighscores" class="startPage__button">
+                    View Highscores
+                </button>
+                <button class="startPage__button">How to play?</button>
+            </div>
+            <div class="highscores" id="highscoreList">
+                <h2 class="highscores__heading">HighScores!</h2>
+                <button class="highscores__btn" id="highscoreBtn">
+                    Close Window
+                </button>
+            </div>
+        </div>`
+
+        grid.insertAdjacentHTML('beforeend', elem)
+        
+        addClick()
+    }
+
+    function addClick() {
+        //My different buttons on startpage
+        document.querySelector('#veiwHighscores').addEventListener('click', () => {
+            document.querySelector('#highscoreList').style.display = 'flex'
+            getScores()
+        })
+
+        document.querySelector('#startGame').addEventListener('click', () => {
+            start()
+            document.querySelector('#startPage').remove()
+        })
+
+        document.querySelector('#highscoreBtn').addEventListener('click', () => {
+            document.querySelectorAll('.highscore').forEach(score => {
+                score.remove()
+            });
+            document.querySelector('#highscoreList').style.display = 'none'
+        })
+        isGameOver = false
+    }
+   
+    // this starts the game
     function start() {
         if (!isGameOver) {
             let startPlats = 0
@@ -266,6 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener('keyup', control)
         }
     }
+
+    //this gives the option to play again 
     function playAgain() {
         player = document.createElement('div');
         isGameOver = false
@@ -274,8 +338,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('play again');
     }
 
-    document.querySelector('#startGame').addEventListener('click', () => {
-        start()
-        document.querySelector('#startPage').remove()
-    })
+    
 })
