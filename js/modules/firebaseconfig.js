@@ -13,7 +13,7 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   let highScores = [];
-  let userInput = document.querySelector('#inputUser')
+  
 
   async function getScores() {
     highScores = [];
@@ -57,7 +57,18 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where
       
     } 
   }
-  
+  // async function deleteLowScores() {
+  //   await deleteDoc(doc(db, 'Highscores', '2'))
+  // }
 
-  export{ getScores, displayScores }
-  
+  // deleteLowScores()
+
+  async function saveHighscore(playerHighscore) {
+    try {
+      await addDoc(collection(db, 'Highscores'), playerHighscore)
+      console.log('sparar');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  export{ getScores, displayScores, saveHighscore }

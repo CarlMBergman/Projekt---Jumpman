@@ -1,6 +1,8 @@
-import { getScores } from "./modules/firebaseconfig.js";
+import { getScores, saveHighscore } from "./modules/firebaseconfig.js";
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    
 
     const grid   = document.querySelector('.grid');
     let player = document.createElement('div');
@@ -19,8 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let isMovingLeft  = false;
     let isMovingRight = false;
     let isGameOver    = false;
-
     displayStartPage()
+    let playerHighscore = {
+        name: '',
+        score: ''
+    }
+
+    
     
     function createPlayer() {
         grid.appendChild(player)
@@ -241,6 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(rightTimerId)
         clearInterval(movePlatId)
         playerLeftSpace = 50;
+        playerHighscore.score = score
+        saveHighscore(playerHighscore)
         score = 0;
         startPoint = 20;
         playerBottomSpace = startPoint;
@@ -250,6 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
         isMovingLeft  = false;
         isMovingRight = false;
         console.log(platforms);
+        console.log(playerHighscore);
+        
         document.querySelector('#playAgain').addEventListener('click', playAgain)
         document.querySelector('#backToStart').addEventListener('click', () => {
             document.querySelector('#lostPage').remove()
@@ -262,11 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.removeChild(grid.firstChild)
         }
         grid.innerHTML = 
-        `<div id="lostPage">
+        `<div id="lostPage" class="lost-page">
             <h1 class="heading">Game Over!</h1>
             <h4>You scored: ${score}</h4>
-            <button id="playAgain">Play Again?</button>
-            <button id="backToStart">Back to startpage</button>
+            <div class="startPage__buttons">
+            <button id="playAgain" class="startPage__button">Play Again?</button>
+            <button id="backToStart" class="startPage__button">Back to startpage</button>
+            </div>
         </div>`
     }
 
@@ -275,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="startPage" class="startPage">
             <h1 class="heading">Welcome to Jumpman!</h1>
             <p class="instruction">Insert your username and then press the button to play!</p>
-            <input id="inputUser" type="text" value="username">
+            <input id="inputUser" class="startPage__input" type="text" placeholder="username">
             <div class="startPage__buttons">
                 <button id="startGame" class="startPage__button">Start game!</button>
                 <button id="veiwHighscores" class="startPage__button">
@@ -305,7 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelector('#startGame').addEventListener('click', () => {
             start()
+            let userInput = document.querySelector('#inputUser')
+            playerHighscore.name = userInput.value
             document.querySelector('#startPage').remove()
+            console.log(playerHighscore);
         })
 
         document.querySelector('#highscoreBtn').addEventListener('click', () => {
